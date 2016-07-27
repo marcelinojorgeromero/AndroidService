@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <Button
+        android:id="@+id/btnStartBoundService"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/StartBoundService" />
+    <Button
+        android:text="@string/StartService"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnStartService" />
+    <Button
+        android:text="Open new window"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnOpenNewWnd" />
+    <Button
+        android:text="Test Click Me Response"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnClickMeTest" />
+    <TextView
+        android:text="Times Clicked: 0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblClickMeResult" />
+</LinearLayout>
