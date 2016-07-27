@@ -62,6 +62,7 @@ namespace Client
 
                 Log.Debug("AppDebuggingFlow", $"[StorageService][DoWork] Starting foreground work at {GetNowTime()}");
                 Log.Debug("AppDebuggingFlow", $"[StorageService][DoWork] Prints message: {andPrintMsg}");
+
                 Thread.Sleep(10000);
 
                 Log.Debug("AppDebuggingFlow", $"[StorageService][DoWork] Stopping foreground work at {GetNowTime()}");
