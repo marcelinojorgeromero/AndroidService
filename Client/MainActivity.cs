@@ -11,7 +11,6 @@ namespace Client
     [Activity(Label = "Client", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : Activity, IActivityConnection<ServiceBinder<StorageService>>
     {
-        private Intent _serviceIntent;
         private int _clickCounter;
 
         private bool _isConfigurationChange;
@@ -124,8 +123,7 @@ namespace Client
 
         private void BtnStartServiceWithoutStoppingIt_Click(object sender, EventArgs e)
         {
-            _serviceIntent = new Intent("com.company.app.syncservice");
-            StartService(_serviceIntent);
+            StartService(new Intent("com.company.app.syncservice"));
         }
 
         private void BtnCheckIfServiceIsRunning_Click(object sender, EventArgs e)
@@ -146,7 +144,6 @@ namespace Client
             //binder.SetCurrentActivity(this);
             //binder.StopSelf();
             
-            //TODO: Es posible que no funcione con new Intent el StopService y que tenga que guardar el original. Tengo la variable _serviceIntent para eso.
             var syncServiceClassType = typeof(SyncService);
             Log.Debug("AppDebuggingFlow", $"[MainActivity][BtnStopTheServiceOf2BtnsBefore_Click] is sync service running before calling stop?: {IsMyServiceRunning(syncServiceClassType)}");
 
@@ -155,7 +152,6 @@ namespace Client
             Log.Debug("AppDebuggingFlow", $"[MainActivity][BtnStopTheServiceOf2BtnsBefore_Click] is sync service running after calling stop?: {isSyncServiceRunning}");
 
             LblIsSyncServiceRunning.Text = $"Is Sync Service Running? {isSyncServiceRunning}";
-
         }
 
         private void BtnOpenNewWindow_Click(object sender, EventArgs e)
