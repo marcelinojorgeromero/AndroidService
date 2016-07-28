@@ -42,7 +42,7 @@ namespace Client
         {
             base.OnStart();
 
-            var storageServiceIntent = new Intent("com.devmentor.sitransgruamobile");
+            var storageServiceIntent = new Intent("com.company.app.storageservice");
             
             Log.Debug("AppDebuggingFlow", "[SecondActivity][OnStart] About to initialize constructor of ServiceConnection()");
             _storageServiceConnection = new ServiceConnection<SecondActivity, ServiceBinder<StorageService>>(this);
@@ -122,7 +122,7 @@ namespace Client
         private async void BtnStartNewLongBoundService_Click(object sender, EventArgs e)
         {
             Log.Debug("AppDebuggingFlow", "[SecondActivity][BtnStartNewLongBoundService] About to execute StartService(intent)");
-            StartService(new Intent("com.devmentor.sitransgruamobile"));
+            StartService(new Intent("com.company.app.storageservice"));
             Log.Debug("AppDebuggingFlow", "[SecondActivity][BtnStartNewLongBoundService] StartService(intent) executed");
 
             if (!IsBound)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Android.App;
 using Android.Content;
 using Android.Widget;
@@ -10,6 +11,7 @@ namespace Client
     [Activity(Label = "Client", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : Activity, IActivityConnection<ServiceBinder<StorageService>>
     {
+        private Intent _serviceIntent;
         private int _clickCounter;
 
         private bool _isConfigurationChange;
@@ -17,9 +19,14 @@ namespace Client
 
         protected Button BtnStartBoundService;
         protected Button BtnStartService;
+        protected Button BtnStartServiceWithoutStoppingIt;
+        protected Button BtnCheckIfServiceIsRunning;
+        protected Button BtnStopTheServiceOf2BtnsBefore;
         protected Button BtnTestClickMe;
         protected Button BtnOpenNewWindow;
         protected TextView LblTimesClicked;
+        protected TextView LblIsStorageServiceRunning;
+        protected TextView LblIsSyncServiceRunning;
 
         public ServiceBinder<StorageService> Binder { get; set; }
         public bool IsBound { get; set; }
@@ -43,7 +50,7 @@ namespace Client
         {
             base.OnStart();
 
-            var storageServiceIntent = new Intent("com.devmentor.sitransgruamobile");
+            var storageServiceIntent = new Intent("com.company.app.storageservice");
             _storageServiceConnection = new ServiceConnection<MainActivity, ServiceBinder<StorageService>>(this);
 
             // The BindService method should be called from the ApplicationContext rather than from the Activity
@@ -83,15 +90,23 @@ namespace Client
         {
             BtnStartBoundService = FindViewById<Button>(Resource.Id.btnStartBoundService);
             BtnStartService = FindViewById<Button>(Resource.Id.btnStartService);
+            BtnStartServiceWithoutStoppingIt = FindViewById<Button>(Resource.Id.btnStartServiceWithoutStoppingIt);
+            BtnCheckIfServiceIsRunning = FindViewById<Button>(Resource.Id.btnCheckIfServiceIsRunning);
+            BtnStopTheServiceOf2BtnsBefore = FindViewById<Button>(Resource.Id.btnStopTheServiceOf2BtnsBefore);
             BtnTestClickMe = FindViewById<Button>(Resource.Id.btnClickMeTest);
             BtnOpenNewWindow = FindViewById<Button>(Resource.Id.btnOpenNewWnd);
             LblTimesClicked = FindViewById<TextView>(Resource.Id.lblClickMeResult);
+            LblIsStorageServiceRunning = FindViewById<TextView>(Resource.Id.lblIsStorageServiceRunning);
+            LblIsSyncServiceRunning = FindViewById<TextView>(Resource.Id.lblIsSyncServiceRunning);
         }
 
         private void AssignEventHablders()
         {
             BtnStartBoundService.Click += BtnStartBoundService_Click;
             BtnStartService.Click += BtnStartService_Click;
+            BtnStartServiceWithoutStoppingIt.Click += BtnStartServiceWithoutStoppingIt_Click;
+            BtnCheckIfServiceIsRunning.Click += BtnCheckIfServiceIsRunning_Click;
+            BtnStopTheServiceOf2BtnsBefore.Click += BtnStopTheServiceOf2BtnsBefore_Click;
             BtnTestClickMe.Click += BtnTestClickMe_Click;
             BtnOpenNewWindow.Click += BtnOpenNewWindow_Click;
         }
@@ -104,9 +119,45 @@ namespace Client
 
         private void BtnStartService_Click(object sender, EventArgs e)
         {
-            StartService(new Intent("com.devmentor.sitransgruamobile"));
+            StartService(new Intent("com.company.app.storageservice"));
         }
-        
+
+        private void BtnStartServiceWithoutStoppingIt_Click(object sender, EventArgs e)
+        {
+            _serviceIntent = new Intent("com.company.app.syncservice");
+            StartService(_serviceIntent);
+        }
+
+        private void BtnCheckIfServiceIsRunning_Click(object sender, EventArgs e)
+        {
+            var storageServiceClassType = typeof(StorageService);
+            var syncServiceClassType = typeof(SyncService);
+
+            LblIsStorageServiceRunning.Text = $"Is Storage Service Running? {IsMyServiceRunning(storageServiceClassType)}";
+            LblIsSyncServiceRunning.Text = $"Is Sync Service Running? {IsMyServiceRunning(syncServiceClassType)}";
+        }
+
+        private void BtnStopTheServiceOf2BtnsBefore_Click(object sender, EventArgs e)
+        {
+            // Cuando un servicio se está ejecutando como binder o por startservice y le pregunto si corre me va a decir que si.
+            // Para que termine un servicio bind se debe ejecutar el UnbindService. Así que el siguiente código no hará nada 
+            // al servicio storage.
+            //var binder = Binder.GetServiceInstance();
+            //binder.SetCurrentActivity(this);
+            //binder.StopSelf();
+            
+            //TODO: Es posible que no funcione con new Intent el StopService y que tenga que guardar el original. Tengo la variable _serviceIntent para eso.
+            var syncServiceClassType = typeof(SyncService);
+            Log.Debug("AppDebuggingFlow", $"[MainActivity][BtnStopTheServiceOf2BtnsBefore_Click] is sync service running before calling stop?: {IsMyServiceRunning(syncServiceClassType)}");
+
+            StopService(new Intent(this, syncServiceClassType));
+            var isSyncServiceRunning = IsMyServiceRunning(syncServiceClassType);
+            Log.Debug("AppDebuggingFlow", $"[MainActivity][BtnStopTheServiceOf2BtnsBefore_Click] is sync service running after calling stop?: {isSyncServiceRunning}");
+
+            LblIsSyncServiceRunning.Text = $"Is Sync Service Running? {isSyncServiceRunning}";
+
+        }
+
         private void BtnOpenNewWindow_Click(object sender, EventArgs e)
         {
             var typeOfT = typeof(SecondActivity);
@@ -148,6 +199,13 @@ namespace Client
 
                 Log.Debug("AppDebuggingFlow", "[MainActivity][RoundBoundService][RunOnUiThread] Finished");
             });
+        }
+
+        private bool IsMyServiceRunning(Type cls)
+        {
+            var manager = (ActivityManager)GetSystemService(ActivityService);
+
+            return manager.GetRunningServices(int.MaxValue).Any(service => service.Service.ClassName.Equals(Java.Lang.Class.FromType(cls).CanonicalName));
         }
     }
 }

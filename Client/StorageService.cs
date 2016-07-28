@@ -8,7 +8,7 @@ using Android.Util;
 namespace Client
 {
     [Service]
-    [IntentFilter(new[] { "com.devmentor.sitransgruamobile" })]
+    [IntentFilter(new[] { "com.company.app.storageservice" })]
     public class StorageService : Service
     {
         private ServiceBinder<StorageService> _binder;
@@ -80,7 +80,7 @@ namespace Client
                  StopSelf() stops the current service. Applies only to long running services created by StartService.
                  If service is not running StopSelf does nothing.
                  */
-                StopSelf(); 
+                StopSelf();
             });
 
             t.Start();

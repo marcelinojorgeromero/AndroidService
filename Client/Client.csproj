@@ -60,6 +60,7 @@
     <Compile Include="SecondActivity.cs" />
     <Compile Include="StorageService.cs" />
     <Compile Include="ServiceBinder.cs" />
+    <Compile Include="SyncService.cs" />
     <Compile Include="Table.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -14,12 +14,27 @@
         android:layout_height="wrap_content"
         android:id="@+id/btnStartService" />
     <Button
+        android:text="Start Service Without Stopping It"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnStartServiceWithoutStoppingIt" />
+    <Button
+        android:text="Check If Service Of The Previous Btn Is Running"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnCheckIfServiceIsRunning" />
+    <Button
+        android:text="Stop The Service Of 2 Btns Before"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnStopTheServiceOf2BtnsBefore" />
+    <Button
         android:text="Open new window"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnOpenNewWnd" />
     <Button
-        android:text="Test Click Me Response"
+        android:text="Click Me Response Test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnClickMeTest" />
@@ -28,4 +43,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/lblClickMeResult" />
+    <TextView
+        android:text="Is Storage Service Running? _______"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblIsStorageServiceRunning" />
+    <TextView
+        android:text="Is Sync Service Running? _______"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblIsSyncServiceRunning" />
 </LinearLayout>

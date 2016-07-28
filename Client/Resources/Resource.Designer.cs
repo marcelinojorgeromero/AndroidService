@@ -60,17 +60,20 @@ namespace Client
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f050006
-			public const int btnClickMeResponseSecondAct = 2131034118;
-			
 			// aapt resource value: 0x7f050003
-			public const int btnClickMeTest = 2131034115;
+			public const int btnCheckIfServiceIsRunning = 2131034115;
+			
+			// aapt resource value: 0x7f05000b
+			public const int btnClickMeResponseSecondAct = 2131034123;
+			
+			// aapt resource value: 0x7f050006
+			public const int btnClickMeTest = 2131034118;
+			
+			// aapt resource value: 0x7f05000a
+			public const int btnNewServiceBoundLongRun = 2131034122;
 			
 			// aapt resource value: 0x7f050005
-			public const int btnNewServiceBoundLongRun = 2131034117;
-			
-			// aapt resource value: 0x7f050002
-			public const int btnOpenNewWnd = 2131034114;
+			public const int btnOpenNewWnd = 2131034117;
 			
 			// aapt resource value: 0x7f050000
 			public const int btnStartBoundService = 2131034112;
@@ -78,11 +81,23 @@ namespace Client
 			// aapt resource value: 0x7f050001
 			public const int btnStartService = 2131034113;
 			
+			// aapt resource value: 0x7f050002
+			public const int btnStartServiceWithoutStoppingIt = 2131034114;
+			
 			// aapt resource value: 0x7f050004
-			public const int lblClickMeResult = 2131034116;
+			public const int btnStopTheServiceOf2BtnsBefore = 2131034116;
 			
 			// aapt resource value: 0x7f050007
-			public const int lblClickMeResultSecondAct = 2131034119;
+			public const int lblClickMeResult = 2131034119;
+			
+			// aapt resource value: 0x7f05000c
+			public const int lblClickMeResultSecondAct = 2131034124;
+			
+			// aapt resource value: 0x7f050008
+			public const int lblIsStorageServiceRunning = 2131034120;
+			
+			// aapt resource value: 0x7f050009
+			public const int lblIsSyncServiceRunning = 2131034121;
 			
 			static Id()
 			{
